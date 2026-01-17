@@ -1046,6 +1046,9 @@ class HanlangIDE(tk.Tk):
         # 예제 코드 로드
         self._load_example()
 
+        # 예제 폴더 자동 열기
+        self._open_examples_folder()
+
     def _create_menu(self):
         """메뉴바 생성"""
         self.menubar = tk.Menu(self, bg='#3C3C3C', fg='#CCCCCC')
@@ -1058,6 +1061,7 @@ class HanlangIDE(tk.Tk):
         self.file_menu.add_command(label="다른 이름으로 저장  Ctrl+Shift+S", command=self.다른이름으로저장)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="폴더 열기", command=self.폴더열기)
+        self.file_menu.add_command(label="예제 폴더 열기", command=self._open_examples_folder)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="종료", command=self.quit)
         self.menubar.add_cascade(label="파일", menu=self.file_menu)
@@ -1318,6 +1322,20 @@ class HanlangIDE(tk.Tk):
         if path:
             self.파일탐색기.폴더열기(path)
             self.상태바.상태설정(f"폴더 열림: {os.path.basename(path)}")
+
+    def _open_examples_folder(self):
+        """예제 폴더 열기"""
+        # 현재 스크립트 위치 기준으로 examples 폴더 찾기
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        examples_path = os.path.join(script_dir, 'examples')
+
+        if os.path.exists(examples_path):
+            self.파일탐색기.폴더열기(examples_path)
+            self.상태바.상태설정("예제 폴더 열림")
+        else:
+            # examples 폴더가 없으면 현재 폴더 열기
+            self.파일탐색기.폴더열기(script_dir)
+            self.상태바.상태설정("프로젝트 폴더 열림")
 
     # 실행 기능
     def 실행(self):
