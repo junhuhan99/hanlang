@@ -24,7 +24,7 @@ jobs:
 
     - name: Build EXE
       run: |
-        pyinstaller --windowed --name "한랭 IDE" --add-data "hanlang_interpreter.py;." --add-data "hanlang_lexer.py;." --add-data "hanlang_parser.py;." --add-data "examples;examples" hanlang_ide.py
+        pyinstaller --windowed --name "한랭 IDE" --icon "hanlang.ico" --add-data "hanlang_interpreter.py;." --add-data "hanlang_lexer.py;." --add-data "hanlang_parser.py;." --add-data "examples;examples" hanlang_ide.py
 
     - name: Create ZIP
       run: |
