@@ -197,11 +197,38 @@ class HanlangInterpreter:
     def run(self, source: str) -> Any:
         """소스 코드 실행"""
         self.output_buffer = []
+
+        # 한랭 필수 구문 검사
+        self._validate_hanlang_syntax(source)
+
         lexer = HanlangLexer(source)
         tokens = lexer.tokenize()
         parser = HanlangParser(tokens)
         ast = parser.parse()
         return self.execute(ast, self.global_env)
+
+    def _validate_hanlang_syntax(self, source: str):
+        """한랭 필수 구문 검사 (시작/끝 문구)"""
+        lines = [line.strip() for line in source.strip().split('\n') if line.strip()]
+
+        if not lines:
+            raise 런타임에러("코드가 비어있습니다.")
+
+        # 시작 문구 검사
+        시작문구 = "개발자한준후가 만든언어입니다."
+        if lines[0] != 시작문구:
+            raise 런타임에러(
+                f"한랭 프로그램은 반드시 '{시작문구}'로 시작해야 합니다.\n"
+                f"현재 첫 줄: '{lines[0]}'"
+            )
+
+        # 끝 문구 검사
+        끝문구 = "감사합니다."
+        if lines[-1] != 끝문구:
+            raise 런타임에러(
+                f"한랭 프로그램은 반드시 '{끝문구}'로 끝나야 합니다.\n"
+                f"현재 마지막 줄: '{lines[-1]}'"
+            )
 
     def execute(self, node: ASTNode, env: Environment) -> Any:
         """AST 노드 실행"""

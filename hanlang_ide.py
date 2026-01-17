@@ -921,7 +921,7 @@ class 파일탐색기(tk.Frame):
 
             # 폴더 먼저
             folders = [f for f in items if os.path.isdir(os.path.join(path, f)) and not f.startswith('.')]
-            files = [f for f in items if os.path.isfile(os.path.join(path, f)) and f.endswith('.한랭')]
+            files = [f for f in items if os.path.isfile(os.path.join(path, f)) and f.endswith('.hanlang')]
 
             for folder in folders:
                 full_path = os.path.join(path, folder)
@@ -1191,7 +1191,9 @@ class HanlangIDE(tk.Tk):
 
     def _load_example(self):
         """예제 코드 로드"""
-        example = '''# 한랭 프로그래밍 언어에 오신 것을 환영합니다!
+        example = '''개발자한준후가 만든언어입니다.
+
+# 한랭 프로그래밍 언어에 오신 것을 환영합니다!
 # 한준후랭귀지 (HanLang) - 한글로 코딩하세요!
 
 # 변수 선언
@@ -1258,6 +1260,8 @@ class HanlangIDE(tk.Tk):
 학생.소개()
 
 출력("\\n=== 프로그램 종료 ===")
+
+감사합니다.
 '''
         self.편집기.코드설정하기(example)
 
@@ -1279,7 +1283,7 @@ class HanlangIDE(tk.Tk):
                 return
 
         path = filedialog.askopenfilename(
-            filetypes=[("한랭 파일", "*.한랭"), ("모든 파일", "*.*")]
+            filetypes=[("한랭 파일", "*.hanlang"), ("모든 파일", "*.*")]
         )
         if path:
             self._on_file_select(path)
@@ -1292,8 +1296,8 @@ class HanlangIDE(tk.Tk):
 
     def 다른이름으로저장(self):
         path = filedialog.asksaveasfilename(
-            defaultextension=".한랭",
-            filetypes=[("한랭 파일", "*.한랭"), ("모든 파일", "*.*")]
+            defaultextension=".hanlang",
+            filetypes=[("한랭 파일", "*.hanlang"), ("모든 파일", "*.*")]
         )
         if path:
             self._save_file(path)

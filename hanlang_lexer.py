@@ -176,6 +176,17 @@ class HanlangLexer:
             self.error("종료되지 않은 주석")
         return False
 
+    def skip_hanlang_special(self):
+        """한랭 특수 구문 건너뛰기 (시작/끝 문구)"""
+        특수문구들 = ["개발자한준후가 만든언어입니다.", "감사합니다."]
+
+        for 문구 in 특수문구들:
+            if self.source[self.pos:].startswith(문구):
+                for _ in range(len(문구)):
+                    self.advance()
+                return True
+        return False
+
     def read_string(self) -> Token:
         start_line = self.line
         start_column = self.column
@@ -256,6 +267,10 @@ class HanlangLexer:
 
             # 주석 건너뛰기
             if self.skip_comment():
+                continue
+
+            # 한랭 특수 구문 건너뛰기
+            if self.skip_hanlang_special():
                 continue
 
             char = self.peek()
